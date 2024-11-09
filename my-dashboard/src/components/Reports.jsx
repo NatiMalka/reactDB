@@ -34,9 +34,11 @@ function Reports({ clients, monthlyHistory }) {
 
   const paperStyle = {
     p: 3,
-    height: 400,
     backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.03)' : '#ffffff',
     transition: 'background-color 0.3s ease',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
   };
 
   const chartOptions = {
@@ -49,6 +51,7 @@ function Reports({ clients, monthlyHistory }) {
         labels: {
           font: { family: 'Rubik' },
           color: theme.palette.text.primary,
+          padding: 20
         }
       }
     },
@@ -56,11 +59,17 @@ function Reports({ clients, monthlyHistory }) {
       y: {
         ticks: {
           color: theme.palette.text.secondary,
+        },
+        grid: {
+          color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         }
       },
       x: {
         ticks: {
           color: theme.palette.text.secondary,
+        },
+        grid: {
+          color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         }
       }
     }
@@ -121,35 +130,35 @@ function Reports({ clients, monthlyHistory }) {
         דוחות וניתוח נתונים
       </Typography>
       
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+      <Grid container spacing={3} sx={{ height: '100%' }}>
+        <Grid item xs={12}>
           <Paper sx={paperStyle}>
             <Typography variant="h6" gutterBottom>
               מגמת הכנסות חודשית
             </Typography>
-            <Box sx={{ height: 300 }}>
+            <Box sx={{ flexGrow: 1, minHeight: 300 }}>
               <Line data={revenueData} options={chartOptions} />
             </Box>
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <Paper sx={paperStyle}>
             <Typography variant="h6" gutterBottom>
               התפלגות סטטוס לקוחות
             </Typography>
-            <Box sx={{ height: 300 }}>
+            <Box sx={{ flexGrow: 1, minHeight: 300 }}>
               <Pie data={statusData} options={chartOptions} />
             </Box>
           </Paper>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <Paper sx={paperStyle}>
             <Typography variant="h6" gutterBottom>
               התפלגות תכניות מנוי
             </Typography>
-            <Box sx={{ height: 300 }}>
+            <Box sx={{ flexGrow: 1, minHeight: 300 }}>
               <Bar data={planData} options={chartOptions} />
             </Box>
           </Paper>

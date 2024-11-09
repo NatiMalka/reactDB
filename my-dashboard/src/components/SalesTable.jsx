@@ -105,7 +105,19 @@ function SalesTable({ clients, onDeleteClient, onEditClient }) {
           <SearchBar onSearch={setSearchQuery} />
         </Box>
       </Box>
-      <TableContainer component={Paper}>
+      <TableContainer 
+        component={Paper}
+        sx={{
+          overflowX: 'auto',
+          '& .MuiTable-root': {
+            minWidth: {
+              xs: 650,
+              sm: 750,
+              md: 900
+            }
+          }
+        }}
+      >
         <Table>
           <TableHead>
             <TableRow>

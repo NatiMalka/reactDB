@@ -31,7 +31,7 @@ function Dashboard({
   };
 
   const paperStyle = {
-    p: 3,
+    p: { xs: 2, sm: 3 },
     backgroundColor: darkMode 
       ? 'rgba(255, 255, 255, 0.03)' 
       : '#ffffff',
@@ -45,16 +45,19 @@ function Dashboard({
 
   return (
     <Box sx={{ 
-      padding: '24px 40px',
+      padding: { xs: '16px', sm: '24px 40px' },
       minHeight: '100vh',
       backgroundColor: theme.palette.background.default,
-      transition: 'background-color 0.3s ease'
+      transition: 'background-color 0.3s ease',
+      width: '100%',
+      overflowX: 'hidden'
     }}>
       <Typography 
         variant="h4" 
         gutterBottom 
         sx={{ 
-          mb: 4,
+          mb: { xs: 2, sm: 4 },
+          fontSize: { xs: '1.5rem', sm: '2rem' },
           color: theme.palette.text.primary,
           transition: 'color 0.3s ease'
         }}
@@ -71,7 +74,7 @@ function Dashboard({
             cancelledClientsCount={cancelledClientsCount}
           />
         </Grid>
-
+        
         <Grid item xs={12}>
           <Paper sx={paperStyle}>
             <SalesProgressBar 

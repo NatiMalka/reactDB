@@ -13,24 +13,24 @@ function Sidebar() {
   return (
     <Drawer
       variant="permanent"
-  sx={{
-    width: 240,
-    flexShrink: 0,
-    height: '100vh',
-    '& .MuiDrawer-paper': {
-      width: 240,
-      boxSizing: 'border-box',
-      background: darkMode ? 'rgba(37, 99, 235, 0.1)' : 'rgba(25, 118, 210, 0.95)',
-      backdropFilter: 'blur(10px)',
-      borderLeft: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(21, 101, 192, 0.5)',
-      borderRight: 'none',
-      height: '100vh',
-      position: 'static',
-      right: 0,
-      transition: 'background-color 0.3s ease, border-color 0.3s ease',
-    },
-  }}
->
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        height: '100vh',
+        '& .MuiDrawer-paper': {
+          width: 240,
+          boxSizing: 'border-box',
+          background: darkMode ? 'rgba(37, 99, 235, 0.1)' : 'rgba(25, 118, 210, 0.95)',
+          backdropFilter: 'blur(10px)',
+          borderLeft: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(21, 101, 192, 0.5)',
+          borderRight: 'none',
+          height: '100vh',
+          position: 'static',
+          right: 0,
+          transition: 'background-color 0.3s ease, border-color 0.3s ease',
+        },
+      }}
+    >
       <Box sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="h5" sx={{ color: 'white', fontWeight: 600 }}>
           לוח בקרת מכירות

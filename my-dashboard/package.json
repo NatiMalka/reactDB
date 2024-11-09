@@ -34,9 +34,11 @@
     "globals": "^15.11.0",
     "vite": "^5.4.10"
   },
-  "homepage": "https://github.com/NatiMalka/reactDB.git",
+  "homepage": "https://natimalka.github.io/reactDB",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "build": "vite build",
+    "dev": "vite"
   }
 }
