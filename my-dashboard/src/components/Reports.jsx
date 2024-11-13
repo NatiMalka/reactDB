@@ -53,12 +53,52 @@ function Reports({ clients, monthlyHistory }) {
           color: theme.palette.text.primary,
           padding: 20
         }
+      },
+      tooltip: {
+        rtl: true,
+        titleFont: { family: 'Rubik', size: 14 },
+        bodyFont: { family: 'Rubik', size: 13 },
+        backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.95)',
+        titleColor: darkMode ? '#fff' : '#000',
+        bodyColor: darkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.7)',
+        borderColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 1,
+        padding: 12,
+        boxPadding: 6,
+        callbacks: {
+          label: function(context) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              // Add ₪ symbol for revenue data
+              label += '₪' + context.parsed.y.toLocaleString();
+            }
+            return label;
+          },
+          // Custom title for pie charts
+          title: function(tooltipItems) {
+            const datasetIndex = tooltipItems[0].datasetIndex;
+            const index = tooltipItems[0].dataIndex;
+            if (tooltipItems[0].chart.config.type === 'pie') {
+              const total = tooltipItems[0].dataset.data.reduce((a, b) => a + b, 0);
+              const value = tooltipItems[0].parsed;
+              const percentage = ((value / total) * 100).toFixed(1);
+              return `${tooltipItems[0].label} (${percentage}%)`;
+            }
+            return tooltipItems[0].label;
+          }
+        }
       }
     },
     scales: {
       y: {
         ticks: {
           color: theme.palette.text.secondary,
+          callback: function(value) {
+            return '₪' + value.toLocaleString();
+          }
         },
         grid: {
           color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
@@ -72,6 +112,14 @@ function Reports({ clients, monthlyHistory }) {
           color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         }
       }
+    },
+    interaction: {
+      intersect: false,
+      mode: 'nearest'
+    },
+    animation: {
+      duration: 1000,
+      easing: 'easeInOutQuart'
     }
   };
 

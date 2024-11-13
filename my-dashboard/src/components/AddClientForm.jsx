@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   TextField, 
   Button, 
@@ -19,6 +19,28 @@ function AddClientForm({ onAddClient }) {
     date: new Date().toISOString().split('T')[0],
     notes: ''
   });
+
+  const [errors, setErrors] = useState({
+    name: '',
+    phone: '',
+    subscriptionPlan: '',
+    amount: ''
+  });
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'name':
+        return value.length < 2 ? 'שם חייב להכיל לפחות 2 תווים' : '';
+      case 'phone':
+        return !/^05\d{8}$/.test(value) ? 'מספר טלפון לא תקין' : '';
+      case 'subscriptionPlan':
+        return !value ? 'נא לבחור תכנית מנוי' : '';
+      case 'amount':
+        return isNaN(value) || value <= 0 ? 'סכום חייב להיות מספר חיובי' : '';
+      default:
+        return '';
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +75,40 @@ function AddClientForm({ onAddClient }) {
     }
   };
 
+  useEffect(() => {
+    const savedData = localStorage.getItem('formDraft');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    const saveTimeout = setTimeout(() => {
+      localStorage.setItem('formDraft', JSON.stringify(formData));
+    }, 1000);
+
+    return () => clearTimeout(saveTimeout);
+  }, [formData]);
+
+  const calculateProgress = () => {
+    const requiredFields = ['name', 'phone', 'subscriptionPlan', 'amount'];
+    const completedFields = requiredFields.filter(field => formData[field] && !errors[field]);
+    return (completedFields.length / requiredFields.length) * 100;
+  };
+
+  const handleSubscriptionChange = (e) => {
+    const plan = subscriptionPlans.find(p => p.value === e.target.value);
+    const defaultAmount = plan ? plan.price : '';
+    const defaultDate = new Date().toISOString().split('T')[0];
+    
+    setFormData({ 
+      ...formData, 
+      subscriptionPlan: e.target.value,
+      amount: defaultAmount,
+      date: defaultDate
+    });
+  };
+
   return (
     <Box 
       component="form" 
@@ -85,8 +141,18 @@ function AddClientForm({ onAddClient }) {
             fullWidth
             label="טלפון"
             value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^\d]/g, '').slice(0, 10);
+              setFormData({ ...formData, phone: value });
+              setErrors({ ...errors, phone: validateField('phone', value) });
+            }}
+            error={!!errors.phone}
+            helperText={errors.phone}
             required
+            inputProps={{
+              maxLength: 10,
+              placeholder: '05XXXXXXXX'
+            }}
             sx={inputStyles}
           />
         </Grid>

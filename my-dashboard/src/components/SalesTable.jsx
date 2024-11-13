@@ -8,7 +8,13 @@ import {
   IconButton,
   Paper,
   TableContainer,
-  Box 
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -25,6 +31,8 @@ function SalesTable({ clients, onDeleteClient, onEditClient }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState(null);
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -79,6 +87,24 @@ function SalesTable({ clients, onDeleteClient, onEditClient }) {
       default:
         return plan;
     }
+  };
+
+  const handleDeleteClick = (client) => {
+    setClientToDelete(client);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (clientToDelete) {
+      onDeleteClient(clientToDelete.id);
+      setDeleteConfirmOpen(false);
+      setClientToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteConfirmOpen(false);
+    setClientToDelete(null);
   };
 
   return (
@@ -182,7 +208,7 @@ function SalesTable({ clients, onDeleteClient, onEditClient }) {
                       <EditIcon />
                     </IconButton>
                     <IconButton 
-                      onClick={() => onDeleteClient(client.id)}
+                      onClick={() => handleDeleteClick(client)}
                       color="error"
                       title="מחק לקוח"
                     >
@@ -208,6 +234,82 @@ function SalesTable({ clients, onDeleteClient, onEditClient }) {
           onSave={onEditClient}
         />
       </TableContainer>
+
+      <Dialog
+        open={deleteConfirmOpen}
+        onClose={handleCancelDelete}
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+            width: 'auto',
+            minWidth: '280px',
+            maxWidth: '320px',
+            m: 2,
+            backgroundColor: darkMode ? '#2d3748' : '#fff',
+            height: 'auto',
+            maxHeight: '200px'
+          }
+        }}
+        sx={{
+          '& .MuiDialog-container': {
+            alignItems: 'center'
+          }
+        }}
+      >
+        <DialogTitle sx={{ 
+          fontSize: '1rem',
+          pt: 1,
+          pb: 0.5,
+          px: 2,
+          minHeight: 'auto'
+        }}>
+          מחיקת לקוח
+        </DialogTitle>
+        <DialogContent sx={{ 
+          py: 0.5,
+          px: 2,
+          overflow: 'hidden'
+        }}>
+          <DialogContentText sx={{ 
+            fontSize: '0.9rem',
+            mb: 0,
+            color: darkMode ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)'
+          }}>
+            {clientToDelete ? `האם למחוק את ${clientToDelete.name}?` : ''}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ 
+          p: 1,
+          px: 2,
+          gap: 1,
+          minHeight: 'auto'
+        }}>
+          <Button 
+            onClick={handleCancelDelete}
+            size="small"
+            sx={{
+              minWidth: '60px',
+              fontSize: '0.85rem',
+              py: 0.5
+            }}
+          >
+            ביטול
+          </Button>
+          <Button 
+            onClick={handleConfirmDelete}
+            color="error"
+            variant="contained"
+            size="small"
+            sx={{
+              minWidth: '60px',
+              fontSize: '0.85rem',
+              py: 0.5
+            }}
+          >
+            מחק
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
