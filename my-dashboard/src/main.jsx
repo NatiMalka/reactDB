@@ -37,9 +37,19 @@ function ThemedApp() {
       fontFamily: "'Rubik', sans-serif",
       h4: {
         fontWeight: 600,
+        fontSize: {
+          xs: '1.5rem',
+          sm: '1.75rem',
+          md: '2rem',
+          lg: '2.25rem'
+        }
       },
-      h6: {
-        fontWeight: 500,
+      body1: {
+        fontSize: {
+          xs: '0.875rem',
+          sm: '0.9rem',
+          md: '1rem'
+        }
       }
     },
     components: {
@@ -47,6 +57,9 @@ function ThemedApp() {
         styleOverrides: {
           root: {
             transition: 'background-color 0.3s ease',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
           },
         },
       },
@@ -64,6 +77,18 @@ function ThemedApp() {
         styleOverrides: {
           root: {
             fontFamily: 'Rubik'
+          }
+        }
+      },
+      MuiContainer: {
+        styleOverrides: {
+          root: {
+            maxWidth: '100% !important',
+            padding: {
+              xs: 2,
+              sm: 3,
+              md: 4
+            }
           }
         }
       }

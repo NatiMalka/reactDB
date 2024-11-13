@@ -112,13 +112,13 @@ function Reports({ clients, monthlyHistory }) {
 
   // Subscription Plan Distribution
   const planData = {
-    labels: ['בסיסי', 'פרימיום', 'עסקי'],
+    labels: ['כוכב', 'זהב', 'פרימיום'],
     datasets: [{
       label: 'מכירות לפי תכנית',
       data: [
         clients.filter(c => c.subscriptionPlan === 'basic').length,
+        clients.filter(c => c.subscriptionPlan === 'gold').length,
         clients.filter(c => c.subscriptionPlan === 'premium').length,
-        clients.filter(c => c.subscriptionPlan === 'enterprise').length,
       ],
       backgroundColor: ['#3b82f6', '#7c3aed', '#ef4444'],
     }],

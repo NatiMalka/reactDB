@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: relative;
   direction: rtl;
   overflow: hidden;
@@ -16,15 +16,21 @@
   margin-right: 0;
   background: transparent;
   border-left: none;
-  width: calc(100vw - 240px);
+  width: calc(100% - 240px);
   height: 100vh;
-  overflow-y: scroll;
-  scrollbar-width: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
   -ms-overflow-style: none;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .main-content::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+  background-color: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 

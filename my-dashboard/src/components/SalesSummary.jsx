@@ -62,9 +62,9 @@ function SalesSummary({ totalSales, totalCancellations, clientCount, cancelledCl
   };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={3}>
-        <Paper sx={paperStyle}>
+    <Grid container spacing={2} sx={{ width: '100%', margin: 0 }}>
+      <Grid item xs={12} sm={6} md={3}>
+        <Paper sx={{ ...paperStyle, height: '100%' }}>
           <Box sx={iconBoxStyle()} className="icon-box">
             <TrendingUpIcon sx={{ color: '#2196f3', fontSize: 32 }} />
           </Box>
@@ -80,8 +80,8 @@ function SalesSummary({ totalSales, totalCancellations, clientCount, cancelledCl
         </Paper>
       </Grid>
 
-      <Grid item xs={12} md={3}>
-        <Paper sx={paperStyle}>
+      <Grid item xs={12} sm={6} md={3}>
+        <Paper sx={{ ...paperStyle, height: '100%' }}>
           <Box sx={iconBoxStyle()} className="icon-box">
             <PeopleIcon sx={{ color: '#2196f3', fontSize: 32 }} />
           </Box>
@@ -94,8 +94,8 @@ function SalesSummary({ totalSales, totalCancellations, clientCount, cancelledCl
         </Paper>
       </Grid>
 
-      <Grid item xs={12} md={3}>
-        <Paper sx={paperStyle}>
+      <Grid item xs={12} sm={6} md={3}>
+        <Paper sx={{ ...paperStyle, height: '100%' }}>
           <Box sx={iconBoxStyle(true)} className="icon-box">
             <CancelIcon sx={{ color: '#ef4444', fontSize: 32 }} />
           </Box>
@@ -110,8 +110,8 @@ function SalesSummary({ totalSales, totalCancellations, clientCount, cancelledCl
         </Paper>
       </Grid>
 
-      <Grid item xs={12} md={3}>
-        <Paper sx={paperStyle}>
+      <Grid item xs={12} sm={6} md={3}>
+        <Paper sx={{ ...paperStyle, height: '100%' }}>
           <Box sx={iconBoxStyle(true)} className="icon-box">
             <CancelIcon sx={{ color: '#ef4444', fontSize: 32 }} />
           </Box>

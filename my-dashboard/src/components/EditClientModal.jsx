@@ -10,14 +10,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Box
+  Box,
+  Typography
 } from '@mui/material';
-
-const subscriptionPlans = [
-  { value: 'basic', label: 'תכנית בסיסית - ₪10/חודש' },
-  { value: 'premium', label: 'תכנית פרימיום - ₪25/חודש' },
-  { value: 'enterprise', label: 'תכנית עסקית - ₪50/חודש' },
-];
+import SubscriptionPlanSelect from './shared/SubscriptionPlanSelect';
+import subscriptionPlans from './shared/SubscriptionPlans';
 
 function EditClientModal({ open, onClose, client, onSave }) {
   const [formData, setFormData] = useState({});
@@ -80,27 +77,19 @@ function EditClientModal({ open, onClose, client, onSave }) {
             sx={{ ...inputStyles, mb: 2 }}
           />
           
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>תכנית מנוי</InputLabel>
-            <Select
-              value={formData.subscriptionPlan}
-              label="תכנית מנוי"
-              onChange={(e) => {
-                const plan = subscriptionPlans.find(p => p.value === e.target.value);
-                setFormData({ 
-                  ...formData, 
-                  subscriptionPlan: e.target.value,
-                  amount: plan ? plan.value === 'basic' ? '10' : plan.value === 'premium' ? '25' : '50' : ''
-                });
-              }}
-            >
-              {subscriptionPlans.map((plan) => (
-                <MenuItem key={plan.value} value={plan.value}>
-                  {plan.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <SubscriptionPlanSelect
+            value={formData.subscriptionPlan}
+            onChange={(e) => {
+              const plan = subscriptionPlans.find(p => p.value === e.target.value);
+              setFormData({ 
+                ...formData, 
+                subscriptionPlan: e.target.value,
+                amount: plan ? plan.value === 'basic' ? '2200' : plan.value === 'gold' ? '2780' : '3560' : ''
+              });
+            }}
+            required={true}
+            error={false}
+          />
 
           <TextField
             fullWidth

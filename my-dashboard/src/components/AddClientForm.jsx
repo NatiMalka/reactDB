@@ -2,19 +2,12 @@ import { useState } from 'react';
 import { 
   TextField, 
   Button, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem, 
   Box,
-  Typography 
+  Typography,
+  Grid 
 } from '@mui/material';
-
-const subscriptionPlans = [
-  { value: 'basic', label: 'תכנית בסיסית - ₪10/חודש' },
-  { value: 'premium', label: 'תכנית פרימיום - ₪25/חודש' },
-  { value: 'enterprise', label: 'תכנית עסקית - ₪50/חודש' },
-];
+import SubscriptionPlanSelect from './shared/SubscriptionPlanSelect';
+import subscriptionPlans from './shared/SubscriptionPlans';
 
 function AddClientForm({ onAddClient }) {
   const [formData, setFormData] = useState({
@@ -75,56 +68,82 @@ function AddClientForm({ onAddClient }) {
         הוספת לקוח חדש
       </Typography>
       
-      <TextField
-        fullWidth
-        label="שם"
-        value={formData.name}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        required
-        sx={inputStyles}
-      />
-      
-      <TextField
-        fullWidth
-        label="טלפון"
-        value={formData.phone}
-        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-        required
-        sx={inputStyles}
-      />
-      
-      <FormControl fullWidth required sx={inputStyles}>
-        <InputLabel>תכנית מנוי</InputLabel>
-        <Select
-          value={formData.subscriptionPlan}
-          label="תכנית מנוי"
-          onChange={(e) => {
-            const plan = subscriptionPlans.find(p => p.value === e.target.value);
-            setFormData({ 
-              ...formData, 
-              subscriptionPlan: e.target.value,
-              amount: plan ? plan.value === 'basic' ? '10' : plan.value === 'premium' ? '25' : '50' : ''
-            });
-          }}
-        >
-          {subscriptionPlans.map((plan) => (
-            <MenuItem key={plan.value} value={plan.value}>
-              {plan.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      
-      <TextField
-        fullWidth
-        label="סכום"
-        type="number"
-        value={formData.amount}
-        onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-        required
-        sx={inputStyles}
-      />
-      
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="שם"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+            sx={inputStyles}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="טלפון"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            required
+            sx={inputStyles}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="תאריך"
+            type="date"
+            value={formData.date}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            InputLabelProps={{ shrink: true }}
+            required
+            sx={inputStyles}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <SubscriptionPlanSelect
+            value={formData.subscriptionPlan}
+            onChange={(e) => {
+              const plan = subscriptionPlans.find(p => p.value === e.target.value);
+              setFormData({ 
+                ...formData, 
+                subscriptionPlan: e.target.value,
+                amount: plan ? plan.price : ''
+              });
+            }}
+            required
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="סכום"
+            type="number"
+            value={formData.amount}
+            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+            required
+            sx={inputStyles}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="הערות"
+            multiline
+            rows={2}
+            value={formData.notes}
+            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            sx={inputStyles}
+          />
+        </Grid>
+      </Grid>
+
       <Button 
         type="submit" 
         variant="contained" 

@@ -26,12 +26,40 @@ function ExportButton({ clients, totalSales, cancelledClientsCount }) {
 
     // Create workbook and worksheets
     const wb = XLSX.utils.book_new();
+    
+    // Convert data to sheets with RTL formatting
     const ws_clients = XLSX.utils.json_to_sheet(clientData, { origin: 'A1' });
     const ws_summary = XLSX.utils.json_to_sheet(summaryData, { origin: 'A1' });
+
+    // Add RTL direction to worksheets
+    ws_clients['!cols'] = [
+      { wch: 20 }, { wch: 15 }, { wch: 15 }, 
+      { wch: 20 }, { wch: 15 }, { wch: 25 }, { wch: 15 }
+    ];
+    ws_summary['!cols'] = [{ wch: 20 }, { wch: 20 }, { wch: 20 }];
+
+    // Set RTL property for both worksheets
+    ['!cols', '!rows'].forEach(prop => {
+      if (ws_clients[prop]) {
+        ws_clients[prop].forEach(col => col.rtl = true);
+      }
+      if (ws_summary[prop]) {
+        ws_summary[prop].forEach(col => col.rtl = true);
+      }
+    });
 
     // Add worksheets to workbook
     XLSX.utils.book_append_sheet(wb, ws_clients, 'לקוחות');
     XLSX.utils.book_append_sheet(wb, ws_summary, 'סיכום');
+
+    // Set RTL as default for the workbook
+    wb.Workbook = {
+      Views: [
+        {
+          RTL: true
+        }
+      ]
+    };
 
     // Save file
     XLSX.writeFile(wb, 'דוח_מכירות.xlsx');
@@ -40,11 +68,11 @@ function ExportButton({ clients, totalSales, cancelledClientsCount }) {
   const getHebrewPlan = (plan) => {
     switch(plan) {
       case 'basic':
-        return 'בסיסי';
+        return 'כוכב';
+      case 'gold':
+        return 'זהב';
       case 'premium':
         return 'פרימיום';
-      case 'enterprise':
-        return 'עסקי';
       default:
         return plan;
     }

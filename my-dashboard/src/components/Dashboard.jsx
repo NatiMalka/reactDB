@@ -45,12 +45,22 @@ function Dashboard({
 
   return (
     <Box sx={{ 
-      padding: { xs: '16px', sm: '24px 40px' },
+      padding: { 
+        xs: '16px',
+        sm: '20px',
+        md: '24px',
+        lg: '32px'
+      },
       minHeight: '100vh',
       backgroundColor: theme.palette.background.default,
       transition: 'background-color 0.3s ease',
       width: '100%',
-      overflowX: 'hidden'
+      overflowX: 'hidden',
+      maxWidth: '100%',
+      margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: { xs: 2, sm: 2.5, md: 3 }
     }}>
       <Typography 
         variant="h4" 
@@ -65,7 +75,7 @@ function Dashboard({
         לוח בקרת מכירות
       </Typography>
       
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} sx={{ width: '100%', margin: 0 }}>
         <Grid item xs={12}>
           <SalesSummary 
             totalSales={totalSales} 
@@ -76,7 +86,7 @@ function Dashboard({
         </Grid>
         
         <Grid item xs={12}>
-          <Paper sx={paperStyle}>
+          <Paper sx={{ ...paperStyle, width: '100%' }}>
             <SalesProgressBar 
               totalSales={totalSales} 
               onBonusReached={handleBonusReached}
@@ -85,13 +95,13 @@ function Dashboard({
         </Grid>
         
         <Grid item xs={12} lg={4}>
-          <Paper sx={paperStyle}>
+          <Paper sx={{ ...paperStyle, height: '100%' }}>
             <AddClientForm onAddClient={onAddClient} />
           </Paper>
         </Grid>
         
         <Grid item xs={12} lg={8}>
-          <Paper sx={paperStyle}>
+          <Paper sx={{ ...paperStyle, height: '100%' }}>
             <SalesTable 
               clients={clients} 
               onDeleteClient={onDeleteClient} 
