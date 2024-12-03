@@ -94,3 +94,79 @@
   }
 }
 
+/* Transition utilities */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+a,
+input,
+select,
+.MuiPaper-root,
+.MuiCard-root {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Enhanced loader animation */
+.container {
+  animation: rotate_3922 1.2s linear infinite;
+  background: linear-gradient(45deg, #9b59b6, #84cdfa, #5ad1cd);
+  background-size: 200% 200%;
+  animation: gradient 2s ease infinite, rotate_3922 1.2s linear infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Add smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
+}
+

@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Paper, useTheme as useMuiTheme, CircularProgress } from '@mui/material';
+import { Box, Typography, Grid, Paper, useTheme as useMuiTheme,  } from '@mui/material';
 import { useState, useEffect } from 'react';
 import SalesTable from './SalesTable';
 import AddClientForm from './AddClientForm';
@@ -8,10 +8,11 @@ import BonusCelebration from './BonusCelebration';
 import MonthlyHistory from './MonthlyHistory';
 import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 import Toast from './Toast';
-import LoadingSkeleton from './LoadingSkeleton';
+// import LoadingSkeleton from './LoadingSkeleton';
 import UpcomingWebinar from './UpcomingWebinar';
 import PropTypes from 'prop-types';
 import Loader from './Loader';
+import { fadeIn, scaleIn } from '../utils/animations';
 
 function Dashboard({ 
   clients, 
@@ -116,6 +117,18 @@ function Dashboard({
       : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
   };
 
+  const animatedPaperStyle = {
+    ...paperStyle,
+    animation: `${scaleIn} 0.3s ease-out`,
+    '&:hover': {
+      transform: 'translateY(-2px)',
+      transition: 'transform 0.3s ease-in-out',
+      boxShadow: darkMode 
+        ? '0 8px 16px -1px rgba(0, 0, 0, 0.3)' 
+        : '0 8px 16px -1px rgba(0, 0, 0, 0.1)',
+    }
+  };
+
   return (
     <>
       <Box sx={{ 
@@ -134,7 +147,8 @@ function Dashboard({
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: { xs: 2, sm: 2.5, md: 3 }
+        gap: { xs: 2, sm: 2.5, md: 3 },
+        animation: `${fadeIn} 0.5s ease-out`,
       }}>
         <Typography 
           variant="h4" 
@@ -143,7 +157,11 @@ function Dashboard({
             mb: { xs: 2, sm: 4 },
             fontSize: { xs: '1.5rem', sm: '2rem' },
             color: theme.palette.text.primary,
-            transition: 'color 0.3s ease'
+            transition: 'color 0.3s ease',
+            animation: `${fadeIn} 0.5s ease-out`,
+            animationDelay: '0.1s',
+            opacity: 0,
+            animationFillMode: 'forwards',
           }}
         >
           לוח בקרת מכירות
@@ -151,16 +169,18 @@ function Dashboard({
         
         <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} sx={{ width: '100%', margin: 0 }}>
           <Grid item xs={12}>
-            <SalesSummary 
-              totalSales={totalSales} 
-              totalCancellations={totalCancellations} 
-              clientCount={clients.filter(client => client.status === 'active').length}
-              cancelledClientsCount={cancelledClientsCount}
-            />
+            <Paper sx={animatedPaperStyle}>
+              <SalesSummary 
+                totalSales={totalSales} 
+                totalCancellations={totalCancellations} 
+                clientCount={clients.filter(client => client.status === 'active').length}
+                cancelledClientsCount={cancelledClientsCount}
+              />
+            </Paper>
           </Grid>
           
           <Grid item xs={12}>
-            <Paper sx={{ ...paperStyle, width: '100%' }}>
+            <Paper sx={animatedPaperStyle}>
               <SalesProgressBar 
                 totalSales={totalSales} 
                 onBonusReached={handleBonusReached}
@@ -169,13 +189,13 @@ function Dashboard({
           </Grid>
           
           <Grid item xs={12} lg={4}>
-            <Paper sx={{ ...paperStyle, height: '100%' }}>
+            <Paper sx={animatedPaperStyle}>
               <AddClientForm onAddClient={handleAddClient} />
             </Paper>
           </Grid>
           
           <Grid item xs={12} lg={8}>
-            <Paper sx={{ ...paperStyle, height: '100%' }}>
+            <Paper sx={animatedPaperStyle}>
               <SalesTable 
                 clients={clients} 
                 onDeleteClient={handleDeleteClient} 
@@ -189,7 +209,7 @@ function Dashboard({
           </Grid>
 
           <Grid item xs={12}>
-            <Paper sx={paperStyle}>
+            <Paper sx={animatedPaperStyle}>
               <MonthlyHistory history={monthlyHistory} />
             </Paper>
           </Grid>

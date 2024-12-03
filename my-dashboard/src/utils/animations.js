@@ -1,14 +1,46 @@
-export const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.4, ease: 'easeOut' }
-};
+import { keyframes } from '@emotion/react';
 
-export const scaleIn = {
-  initial: { scale: 0.95, opacity: 0 },
-  animate: { scale: 1, opacity: 1 },
-  transition: { duration: 0.3, ease: 'easeOut' }
-};
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export const slideIn = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
+export const scaleIn = keyframes`
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
+export const rotateIn = keyframes`
+  from {
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+`;
 
 export const pulseAnimation = {
   keyframes: {
