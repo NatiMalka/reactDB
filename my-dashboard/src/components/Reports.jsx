@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Paper, useTheme } from '@mui/material';
+import { Box, Typography, Grid, Paper, useTheme as useMuiTheme } from '@mui/material';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,7 @@ import {
   Filler
 } from 'chart.js';
 import { Bar, Pie, Line } from 'react-chartjs-2';
-import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 ChartJS.register(
   CategoryScale,
@@ -29,8 +29,8 @@ ChartJS.register(
 );
 
 function Reports({ clients, monthlyHistory }) {
-  const { darkMode } = useCustomTheme();
-  const theme = useTheme();
+  const { darkMode } = useTheme();
+  const theme = useMuiTheme();
 
   const paperStyle = {
     p: 3,

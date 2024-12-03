@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
 import Odometer from 'odometer';
 import 'odometer/themes/odometer-theme-minimal.css';
-import { useTheme } from '@mui/material';
-import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
+import { useTheme as useMuiTheme } from '@mui/material';
+import { useTheme } from '../contexts/ThemeContext';
 
 function OdometerNumber({ value, style }) {
   const elementRef = useRef(null);
   const odometerRef = useRef(null);
-  const theme = useTheme();
-  const { darkMode } = useCustomTheme();
+  const muiTheme = useMuiTheme();
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     if (elementRef.current && !odometerRef.current) {

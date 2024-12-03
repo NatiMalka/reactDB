@@ -1,8 +1,8 @@
 import { Skeleton, Box, Grid, Paper } from '@mui/material';
-import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 function LoadingSkeleton() {
-  const { darkMode } = useCustomTheme();
+  const { darkMode } = useTheme();
   
   const paperStyle = {
     p: 3,

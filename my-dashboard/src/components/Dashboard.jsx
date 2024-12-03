@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Paper, useTheme, CircularProgress } from '@mui/material';
+import { Box, Typography, Grid, Paper, useTheme as useMuiTheme, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
 import SalesTable from './SalesTable';
 import AddClientForm from './AddClientForm';
@@ -9,6 +9,9 @@ import MonthlyHistory from './MonthlyHistory';
 import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 import Toast from './Toast';
 import LoadingSkeleton from './LoadingSkeleton';
+import UpcomingWebinar from './UpcomingWebinar';
+import PropTypes from 'prop-types';
+import Loader from './Loader';
 
 function Dashboard({ 
   clients, 
@@ -27,7 +30,7 @@ function Dashboard({
   const [celebrationBonus, setCelebrationBonus] = useState(0);
   const [celebrationTarget, setCelebrationTarget] = useState(0);
   const { darkMode } = useCustomTheme();
-  const theme = useTheme();
+  const theme = useMuiTheme();
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
@@ -44,6 +47,7 @@ function Dashboard({
         severity: 'success'
       });
     } catch (error) {
+      console.error('Error adding client:', error);
       setToast({
         open: true,
         message: 'שגיאה בהוספת לקוח',
@@ -64,6 +68,7 @@ function Dashboard({
         severity: 'success'
       });
     } catch (error) {
+      console.error('Error deleting client:', error);
       setToast({
         open: true,
         message: 'שגיאה במחיקת לקוח',
@@ -75,7 +80,7 @@ function Dashboard({
   };
 
   if (loading) {
-    return <LoadingSkeleton />;
+    return <Loader />;
   }
 
   const handleBonusReached = (bonus, target) => {
@@ -89,6 +94,7 @@ function Dashboard({
         severity: 'success'
       });
     } catch (error) {
+      console.error('Error handling bonus:', error);
       setToast({
         open: true,
         message: 'שגיאה בהצגת חגיגת הבונוס',
@@ -179,6 +185,10 @@ function Dashboard({
           </Grid>
 
           <Grid item xs={12}>
+            <UpcomingWebinar />
+          </Grid>
+
+          <Grid item xs={12}>
             <Paper sx={paperStyle}>
               <MonthlyHistory history={monthlyHistory} />
             </Paper>
@@ -193,24 +203,7 @@ function Dashboard({
         />
       </Box>
 
-      {actionInProgress && (
-        <Box
-          sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            zIndex: 9999,
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      )}
+      {actionInProgress && <Loader />}
 
       <Toast
         open={toast.open}
@@ -221,5 +214,18 @@ function Dashboard({
     </>
   );
 }
+
+Dashboard.propTypes = {
+  clients: PropTypes.arrayOf(PropTypes.shape({
+    status: PropTypes.string,
+  })).isRequired,
+  totalSales: PropTypes.number.isRequired,
+  totalCancellations: PropTypes.number.isRequired,
+  onAddClient: PropTypes.func.isRequired,
+  onDeleteClient: PropTypes.func.isRequired,
+  onEditClient: PropTypes.func.isRequired,
+  cancelledClientsCount: PropTypes.number.isRequired,
+  monthlyHistory: PropTypes.array.isRequired
+};
 
 export default Dashboard;
