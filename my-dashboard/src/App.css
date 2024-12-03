@@ -6,7 +6,7 @@
   position: relative;
   direction: rtl;
   overflow: hidden;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .main-content {
@@ -21,7 +21,7 @@
   overflow-y: auto;
   scrollbar-width: thin;
   -ms-overflow-style: none;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .main-content::-webkit-scrollbar {

@@ -90,12 +90,6 @@ function AddClientForm({ onAddClient }) {
     return () => clearTimeout(saveTimeout);
   }, [formData]);
 
-  const calculateProgress = () => {
-    const requiredFields = ['name', 'phone', 'subscriptionPlan', 'amount'];
-    const completedFields = requiredFields.filter(field => formData[field] && !errors[field]);
-    return (completedFields.length / requiredFields.length) * 100;
-  };
-
   const handleSubscriptionChange = (e) => {
     const plan = subscriptionPlans.find(p => p.value === e.target.value);
     const defaultAmount = plan ? plan.price : '';
